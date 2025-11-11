@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Prediksi Harga Saham</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1 { margin-bottom: 10px; }
+        .container { max-width: 800px; margin: auto; }
+        .message { color: red; margin: 10px 0; }
+        .pred-list { margin-top: 20px; }
+        img { max-width: 100%; border: 1px solid #ccc; margin-top: 20px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Prediksi Harga Saham (RNN BiGRU + LSTM)</h1>
+    <p>Upload file <strong>CSV</strong> berisi data historis saham (seperti di Colab).</p>
+
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".csv">
+        <button type="submit">Prediksi</button>
+    </form>
+
+    {% if message %}
+        <div class="message">{{ message }}</div>
+    {% endif %}
+
+    {% if plot_url %}
+        <h2>Grafik Actual vs Predicted</h2>
+        <img src="{{ plot_url }}" alt="Plot Prediksi">
+    {% endif %}
+
+    {% if predictions %}
+        <div class="pred-list">
+            <h2>30 Nilai Prediksi Pertama (scaled)</h2>
+            <ol>
+                {% for p in predictions %}
+                    <li>{{ "%.6f"|format(p) }}</li>
+                {% endfor %}
+            </ol>
+        </div>
+    {% endif %}
+</div>
+</body>
+</html>
